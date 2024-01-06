@@ -7,6 +7,7 @@ import ShieldPlusIcon from "../assets/icons/shield-plus-icon.svg?react";
 import FileIcon from "../assets/icons/file-icon.svg?react";
 
 import DeductionAccordion from "./DeductionAccordion";
+import toast from "react-hot-toast";
 
 const deductionIcons = [WalletIcon, ShieldPlusIcon, FileIcon];
 
@@ -14,13 +15,20 @@ function Deductions() {
   const [data, setData] = useState({ modifiedData: {}, originalData: {} });
 
   async function getData() {
-    const response = await axios.get(import.meta.env.VITE_API_URL);
+    const response = await axios
+      .get(import.meta.env.VITE_API_URL)
+      .catch((err) => {
+        toast.error(err.message);
+        toast.error(err?.response?.data?.message ?? "Something went wrong !");
+      });
+
+    if (!response) return;
 
     const sections = {};
     const defaultData = {};
-    const deductions = Object.values(response.data.record);
+    const deductions = Object.values(response.data?.record);
 
-    deductions.map((deduction) => {
+    deductions?.map((deduction) => {
       const section = deduction.section;
       sections[section] = [...(sections[section] || []), deduction];
 

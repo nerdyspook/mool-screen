@@ -19,7 +19,7 @@ function DeductionAccordion({
   return (
     <div className="border border-[#E6E9EE] rounded-md mb-4">
       <div
-        className="flex items-center justify-between p-5 bg-[#F4F6FA] rounded-md"
+        className="flex items-center justify-between p-5 bg-[#F4F6FA] rounded-md cursor-pointer"
         onClick={() => setShowData((prev) => !prev)}
       >
         <div className="flex items-center">
